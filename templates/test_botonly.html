@@ -8,9 +8,12 @@
       height: 100%;
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #ffffff;
+      background: transparent;
     }
     #chat-container {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
       width: 400px;
       height: 500px;
       background: white;
@@ -19,6 +22,7 @@
       overflow: hidden;
       display: flex;
       flex-direction: column;
+      z-index: 9999;
     }
     #chat-header {
       background: linear-gradient(135deg, #007cba 0%, #005a87 100%);
@@ -114,6 +118,8 @@
       #chat-container {
         width: calc(100vw - 40px);
         height: 60vh;
+        right: 10px;
+        bottom: 10px;
       }
     }
     .loading {
