@@ -8,87 +8,42 @@
       height: 100%;
       margin: 0;
       font-family: Arial, sans-serif;
-    }
-
-    /* Chatbot部分（背景なし） */
-    body {
-      text-align: left;
-      padding: 0;
       background: #ffffff;
     }
-
-    /* 右下の「Chat」ボタン */
-    #chat-toggle {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 1000;
-    }
-
-    #chat-toggle button {
-      padding: 12px 16px;
-      font-size: 16px;
-      background-color: #007cba;
-      color: white;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      box-shadow: 0 4px 12px rgba(0, 124, 186, 0.3);
-      transition: all 0.3s ease;
-    }
-
-    #chat-toggle button:hover {
-      background-color: #005a87;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(0, 124, 186, 0.4);
-    }
-
-    /* チャット本体 */
     #chat-container {
-      position: fixed;
-      bottom: 80px;
-      right: 20px;
       width: 400px;
       height: 500px;
-      display: none;
       background: white;
       border-radius: 12px;
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
       overflow: hidden;
-      z-index: 999;
-      display: none;
+      display: flex;
       flex-direction: column;
     }
-
     #chat-header {
       background: linear-gradient(135deg, #007cba 0%, #005a87 100%);
       color: white;
       padding: 16px 20px;
       font-weight: 600;
       font-size: 16px;
-
-      text-align: center;        /* ★中央揃え */
-      display: flex;             /* ★これで中央配置を安定 */
-      justify-content: center;   /* ★横方向中央 */
-      align-items: center;       /* ★縦方向中央 */
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
-
     #chat-messages {
       flex: 1;
       overflow-y: auto;
       padding: 16px;
       background: #f8f9fa;
     }
-
     .message {
       margin-bottom: 12px;
       display: flex;
       flex-direction: column;
     }
-
     .message.user { align-items: flex-end; }
     .message.bot  { align-items: flex-start; }
-
     .message-bubble {
       max-width: 80%;
       padding: 12px 16px;
@@ -99,27 +54,22 @@
       white-space: pre-wrap;
       text-align: left;
     }
-
     .message.user .message-bubble {
       background: #007cba;
       color: white;
       border-bottom-right-radius: 4px;
     }
-
     .message.bot .message-bubble {
       background: white;
       color: #333;
       border: 1px solid #e1e5e9;
       border-bottom-left-radius: 4px;
     }
-
     .message-time {
       font-size: 11px;
       color: #666;
       margin-top: 2px;
     }
-
-    /* ▼ 入力欄＋送信ボタン（横並び・ずれないように修正） */
     #chat-input-container {
       display: flex;
       align-items: center;
@@ -128,7 +78,6 @@
       background: white;
       border-top: 1px solid #e1e5e9;
     }
-
     #chat-input {
       flex: 1;
       padding: 10px 14px;
@@ -141,12 +90,10 @@
       min-height: 32px;
       max-height: 120px;
     }
-
     #chat-input:focus {
       border-color: #007cba;
       box-shadow: 0 0 0 2px rgba(0, 124, 186, 0.1);
     }
-
     #send-button {
       width: 40px;
       height: 40px;
@@ -161,26 +108,19 @@
       transition: background-color 0.2s;
       flex-shrink: 0;
     }
-
     #send-button:hover { background: #005a87; }
     #send-button:disabled { background: #ccc; cursor: not-allowed; }
-
     @media (max-width: 480px) {
       #chat-container {
         width: calc(100vw - 40px);
-        right: 20px;
-        left: 20px;
         height: 60vh;
       }
     }
-
-    /* 読込中インジケータ */
     .loading {
       display: none;
       align-items: center;
       margin: 12px 16px;
     }
-
     .loading-dots {
       display: flex;
       align-items: center;
@@ -189,7 +129,6 @@
       border-radius: 18px;
       border: 1px solid #e1e5e9;
     }
-
     .loading-dot {
       width: 8px;
       height: 8px;
@@ -198,10 +137,8 @@
       margin: 0 3px;
       animation: loading 1.4s ease-in-out infinite both;
     }
-
     .loading-dot:nth-child(1){ animation-delay: -0.32s; }
     .loading-dot:nth-child(2){ animation-delay: -0.16s; }
-
     @keyframes loading {
       0%, 80%, 100% { transform: scale(0); opacity: .5; }
       40% { transform: scale(1); opacity: 1; }
@@ -209,22 +146,14 @@
   </style>
 </head>
 <body>
-  <!-- 右下のトグルボタン -->
-  <div id="chat-toggle">
-    <button onclick="toggleChat()">💬 Chat</button>
-  </div>
-
-  <!-- チャット本体 -->
   <div id="chat-container">
     <div id="chat-header">MAINTENANCE INFORMATION</div>
-
     <div id="chat-messages">
       <div class="message bot">
         <div class="message-bubble">Hello! How can I help you today?</div>
         <div class="message-time" id="bot-time"></div>
       </div>
     </div>
-
     <div class="loading" id="loading">
       <div class="loading-dots">
         <div class="loading-dot"></div>
@@ -232,7 +161,6 @@
         <div class="loading-dot"></div>
       </div>
     </div>
-
     <div id="chat-input-container">
       <textarea
         id="chat-input"
@@ -248,63 +176,38 @@
       </button>
     </div>
   </div>
-
   <script>
-    let chatVisible = false;
-
-    function toggleChat() {
-      const chatContainer = document.getElementById("chat-container");
-      const toggleButton = document.querySelector("#chat-toggle button");
-      if (chatVisible) {
-        chatContainer.style.display = "none";
-        toggleButton.textContent = "💬 Chat";
-        chatVisible = false;
-      } else {
-        chatContainer.style.display = "flex";
-        toggleButton.textContent = "✕ Close";
-        chatVisible = true;
-        document.getElementById("chat-input").focus();
-      }
-    }
-
     function handleKeyDown(event) {
       if (event.key === "Enter" && !event.shiftKey) {
         event.preventDefault();
         sendMessage();
       }
     }
-
     function autoResize(textarea) {
       textarea.style.height = "auto";
       textarea.style.height = Math.min(textarea.scrollHeight, 120) + "px";
     }
-
     function getCurrentTime() {
       return new Date().toLocaleTimeString("ja-JP", {
         hour: "2-digit",
         minute: "2-digit",
       });
     }
-
     function addMessage(sender, message, isUser = false) {
       const messagesContainer = document.getElementById("chat-messages");
       const messageDiv = document.createElement("div");
       messageDiv.className = `message ${isUser ? "user" : "bot"}`;
-
       const bubbleDiv = document.createElement("div");
       bubbleDiv.className = "message-bubble";
       bubbleDiv.textContent = message;
-
       const timeDiv = document.createElement("div");
       timeDiv.className = "message-time";
       timeDiv.textContent = getCurrentTime();
-
       messageDiv.appendChild(bubbleDiv);
       messageDiv.appendChild(timeDiv);
       messagesContainer.appendChild(messageDiv);
       messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
-
     function showLoading() {
       const loading = document.getElementById("loading");
       const messages = document.getElementById("chat-messages");
@@ -312,25 +215,20 @@
       loading.style.display = "flex";
       messages.scrollTop = messages.scrollHeight;
     }
-
     function hideLoading() {
       const loading = document.getElementById("loading");
       if (loading) loading.style.display = "none";
     }
-
     async function sendMessage() {
       const input = document.getElementById("chat-input");
       const sendButton = document.getElementById("send-button");
       const message = input.value.trim();
       if (!message) return;
-
       addMessage("You", message, true);
       input.value = "";
       input.style.height = "auto";
       sendButton.disabled = true;
-
       showLoading();
-
       try {
         const response = await fetch("/api/chat", {
           method: "POST",
@@ -338,16 +236,13 @@
           body: JSON.stringify({ message }),
         });
         const data = await response.json();
-
         hideLoading();
-
         const botReply =
           data.message ||
           data.reply ||
           data.text ||
           (data.message_obj && data.message_obj.text) ||
           "応答を取得できませんでした";
-
         addMessage("Bot", botReply);
       } catch (error) {
         hideLoading();
@@ -360,7 +255,6 @@
         input.focus();
       }
     }
-
     document.addEventListener("DOMContentLoaded", function () {
       const t = document.getElementById("bot-time");
       if (t) t.textContent = getCurrentTime();
